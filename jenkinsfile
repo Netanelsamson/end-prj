@@ -14,7 +14,7 @@ pipeline {
 
         stage('Run Shell Script') {
             steps {
-                sh "bash fibvar.sh ${params.user_input}"
+                sh "bash script.sh ${params.user_input}"
             }
         }
 
