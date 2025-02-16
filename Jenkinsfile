@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Netanelsamson/end-prj/blob/main/script.sh'  // Replace with your repository URL
+                git 'https://github.com/Netanelsamson/end-prj/blob/main/script.sh'  
             }
         }
 
