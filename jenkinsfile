@@ -5,16 +5,24 @@ pipeline {
         string(name: 'user_input', defaultValue: '0', description: 'A numeric parameter')
     }
 
+    environment {
+        OUTPUT_FILE = 'output.html'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Netanelsamson/end-prj/blob/main/script.sh'   
+                git 'https://github.com/Netanelsamson/end-prj.git'
             }
         }
 
         stage('Run Shell Script') {
             steps {
-                sh "bash script.sh ${params.user_input}"
+                script {
+                    sh 'chmod +x script.sh'
+                    def output = sh(script: "bash script.sh ${params.user_input}", returnStdout: true).trim()
+                    writeFile file: env.OUTPUT_FILE, text: "<html><body><h1>Output</h1><p>${output}</p></body></html>"
+                }
             }
         }
 
@@ -26,17 +34,23 @@ pipeline {
             }
         }
 
-        stage('Verify Parameter on Web Page') {
+        stage('Verify Parameter in Output') {
             steps {
                 script {
-                    def description = currentBuild.description
-                    if (description.contains("${params.user_input}")) {
-                        echo "Parameter ${params.user_input} exists on the web page."
+                    def output = readFile env.OUTPUT_FILE
+                    if (output.contains("${params.user_input}")) {
+                        echo "Parameter ${params.user_input} exists in the output file."
                     } else {
-                        error "Parameter ${params.user_input} does not exist on the web page."
+                        error "Parameter ${params.user_input} does not exist in the output file."
                     }
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: env.OUTPUT_FILE, fingerprint: true
         }
     }
 }
