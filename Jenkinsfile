@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Netanelsamson/end-prj/blob/main/script.sh'  
+                git 'https://github.com/Netanelsamson/end-prj.git'
             }
         }
 
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def output = sh(script: "bash script.sh ${params.user_input}", returnStdout: true).trim()
-                    writeFile file: OUTPUT_FILE, text: "<html><body><h1>Output</h1><p>${output}</p></body></html>"
+                    writeFile file: env.OUTPUT_FILE, text: "<html><body><h1>Output</h1><p>${output}</p></body></html>"
                 }
             }
         }
@@ -45,32 +45,22 @@ pipeline {
                 }
             }
         }
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: OUTPUT_FILE, fingerprint: true
-            publishHTML(target: [
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: '.',
-                reportFiles: OUTPUT_FILE,
-                reportName: 'Shell Script Output'
-            ])
-        }
-    }
-}
 
         stage('Publish HTML Report') {
             steps {
                 publishHTML(target: [
                     reportName: 'Job Output',
                     reportDir: '.',
-                    reportFiles: 'output.html',
+                    reportFiles: env.OUTPUT_FILE,
                     alwaysLinkToLastBuild: true
                 ])
             }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: env.OUTPUT_FILE, fingerprint: true
         }
     }
 }
