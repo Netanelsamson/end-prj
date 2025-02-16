@@ -8,7 +8,7 @@ is_perfect_square() {
     [ $squared -eq $n ]
 }
 
-# Function to check if a number is a Fibonacci number and find its index
+
 is_fibonacci() {
     num=$1
 
