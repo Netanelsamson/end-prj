@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def output = sh(script: "bash script.sh ${params.user_input}", returnStdout: true).trim()
-                    writeFile file: Fibonacci number, text: "<html><body><h1>Fibonacci number.</h1><p>${Fibonacci number}</p></body></html>"
+                    writeFile file:  output HTML, text: "<html><body><h1>Fibonacci number.</h1><p>${Fibonacci number}</p></body></html>"
                 }
             }
         }
