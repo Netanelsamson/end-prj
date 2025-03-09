@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def output = sh(script: "bash script.sh ${params.user_input}", returnStdout: true).trim()
-                    writeFile file: OUTPUT_FILE, text: "<html><body><h1>Fibonacci number.</h1><p>${output}</p></body></html>"
+                    writeFile file: OUTPUT_FILE, text: "<html><body><h1>Fibonacci number.</h1><p>${Fibonacci number}</p></body></html>"
                 }
             }
         }
@@ -67,7 +67,7 @@ pipeline {
                 publishHTML(target: [
                     reportName: 'Job Output',
                     reportDir: '.',
-                    reportFiles: 'output.html',
+                    reportFiles: 'Fibonacci number',
                     alwaysLinkToLastBuild: true
                 ])
             }
