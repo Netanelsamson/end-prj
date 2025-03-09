@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        Fibonacci number = 'Fibonacci number.'
+       output HTML = 'Fibonacci number.'
     }
 
     stages {
