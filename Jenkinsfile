@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        OUTPUT_FILE = 'output.html'
+        OUTPUT_FILE = 'Fibonacci number.'
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def output = sh(script: "bash script.sh ${params.user_input}", returnStdout: true).trim()
-                    writeFile file: OUTPUT_FILE, text: "<html><body><h1>Output</h1><p>${output}</p></body></html>"
+                    writeFile file: OUTPUT_FILE, text: "<html><body><h1>Fibonacci number.</h1><p>${output}</p></body></html>"
                 }
             }
         }
