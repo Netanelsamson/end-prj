@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'user_input', defaultValue: '0', description: 'A numeric parameter')
+        string(name: 'insert number', defaultValue: '0', description: 'A numeric parameter')
     }
 
     environment {
