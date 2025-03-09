@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        OUTPUT_FILE = 'Fibonacci number.'
+        Fibonacci number = 'Fibonacci number.'
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     def output = sh(script: "bash script.sh ${params.user_input}", returnStdout: true).trim()
-                    writeFile file: OUTPUT_FILE, text: "<html><body><h1>Fibonacci number.</h1><p>${Fibonacci number}</p></body></html>"
+                    writeFile file: Fibonacci number, text: "<html><body><h1>Fibonacci number.</h1><p>${Fibonacci number}</p></body></html>"
                 }
             }
         }
@@ -49,13 +49,13 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: OUTPUT_FILE, fingerprint: true
+            archiveArtifacts artifacts: Fibonacci number, fingerprint: true
             publishHTML(target: [
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
                 reportDir: '.',
-                reportFiles: OUTPUT_FILE,
+                reportFiles: Fibonacci number,
                 reportName: 'Shell Script Output'
             ])
         }
